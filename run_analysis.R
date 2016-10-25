@@ -73,4 +73,4 @@ meltdata<-melt(extracted_data, id.vars = c("subjectID","activityName"))
 meltdata<- tbl_df(meltdata)
 tidydata<- meltdata %>% group_by(subjectID,activityName,variable) %>% summarize(average=mean(value))
 names(tidydata)[3] <- "feature"
-write.table(tidydata,file = "tidy.txt")
+write.table(tidydata,file = "tidy.txt",row.names = FALSE)
