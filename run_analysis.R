@@ -10,6 +10,7 @@
 #Load packages
 library(tidyr)
 library(dplyr)
+library(reshape2)
 
 #Extract activity labels
 activity_labels <- readLines("activity_labels.txt")
@@ -71,4 +72,5 @@ extracted_data <- extracted_data %>% select(-observationPurpose)
 meltdata<-melt(extracted_data, id.vars = c("subjectID","activityName"))
 meltdata<- tbl_df(meltdata)
 tidydata<- meltdata %>% group_by(subjectID,activityName,variable) %>% summarize(average=mean(value))
+names(tidydata)[3] <- "feature"
 write.table(tidydata,file = "tidy.txt")
