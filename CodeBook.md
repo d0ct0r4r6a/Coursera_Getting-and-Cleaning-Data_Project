@@ -1,42 +1,49 @@
 #Code Book
 
-In the 2nd step, after merging the training and the test sets, the mean and standard deviation for each measurement is transferred (subsetted) to a new data frame. How do we select them? It is stated in features_info.txt that mean() describes Mean value & std() describes Standard deviation. So we only extract those variables with mean() and std() in their name.
+This code book describes the steps taken for the analysis, the tidy data set, and other related information. One vital detail about the tidy data set is that it is a **NARROW TIDY DATA SET**.
 
-Activity names are conveniently extracted from activity_labels.txt
+## Analysis
+
+Firstly, we begin with extracting the activity names and feature names from activity_labels.txt and features.txt respectively. Then we collect and combine the training and test data sets in the train and test directory. The combined data set contains a variable named 'observationPurpose' to distinguish training and test observations, but it is remove in subsequent steps to ease our analysis. We also swap the numerical labels for the activity with the activity name to improve clarity.
+
+Next, the mean and standard deviation for each measurement is transferred (subsetted) to a new data frame. How do we select them? It is stated in features_info.txt that mean() describes Mean value & std() describes Standard deviation. So we only extract those variables with mean() and std() in their name.
+
+In giving descriptive names for the features, we came up with a format to explain the measurement feature in the data set. The format is explained in the tidy data set section below.
+
+Finally, the average of each feature for each subject and each activity is measured and put in the **average** column. The feature units are explained below. The resulting data frame is 'written' to a .txt file called tidy.txt in a tab-separated format.
 
 ## Tidy Data Set (tidy.txt)
 
+The tidy dataset comprises a dataframe which dimensions are 11880 (observations) by 4 (variables). The number of observations are derived from getting the average of each feature for each subject and each activity i.e. 66 features x 30 subjects x 6 activities.
+
 ###Variables
-**subjectID** (int) [1-30]
 
-Identifier of the subject who carried out the experiment
+**subjectID** (int) : identifier of the subject who carried out the experiment
 
-**activityName** (factor) 6 levels
+**activityName** (factor, 6 levels) : activities performed by subjects
 
-"laying"
-"sitting"
-"standing"
-"walking"
-"walking_downstairs"
-"walking_upstairs" 
+[1] "laying"
+[2] "sitting"
+[3] "standing"
+[4] "walking"
+[5] "walking_downstairs"
+[6] "walking_upstairs" 
 
-Activities performed by subjects
+**feature** (factor, 66 levels) : measurement features containing mean() and std() in the original dataset
 
-**variable** (factor) 66 levels
+Format:
 
-Each variable will be written in this form:
+*t|f.FeatureName.(D-Axis).Mean|Std*
 
-**t|f.VariableName.(D-Axis).Mean|Std**
+*|* means that it either takes the value to its left or right.
 
-**|** means either it takes the value to its left or right.
+*t|f* specifies if the measurement is in the time or frequency domain, respectively.
 
-**t|f** specifies if the measurement is in the time or frequency domain, respectively.
+*FeatureName* is the name of the measurement variable/feature
 
-**VariableName** is the name of the measurement variable/feature
+*(D-Axis)* denotes the direction of each measurement whenever appropriate.
 
-**(D-Axis)** denotes the direction of each measurement whenever appropriate.
-
-**Mean|Std** denotes whether that is the mean or standard deviation of the variable, respectively.
+*Mean|Std* denotes whether that is the mean or standard deviation of the feature, respectively.
 
  [1] t.BodyLinearAcceleration.X.Mean          
  [2] t.BodyLinearAcceleration.Y.Mean          
@@ -69,7 +76,7 @@ Each variable will be written in this form:
 [29] f.BodyAngularVelocity.Z.Mean             
 [30] f.BodyLinearAccelerationMagnitude.Mean   
 [31] f.BodyLinearJerkMagnitude.Mean           
-[32] f.BodyAngularVelocityMagnitude.Mean      
+[32] f.BodyAngularVelocityMagnitude.Mean     
 [33] f.BodyAngularJerkMagnitude.Mean          
 [34] t.BodyLinearAcceleration.X.Std           
 [35] t.BodyLinearAcceleration.Y.Std           
@@ -104,3 +111,11 @@ Each variable will be written in this form:
 [64] f.BodyLinearJerkMagnitude.Std            
 [65] f.BodyAngularVelocityMagnitude.Std       
 [66] f.BodyAngularJerkMagnitude.Std 
+
+**average** (numeric) : average value of feature in each observation for each activity and for each subject.
+The values are normalized and bounded within [-1,1].
+Units (only applicable to those features starting with a 't'):
+- feature with 'Acceleration' in its name is in standard gravity units 'g' 
+- feature with 'AngularVelocity' in its name is in radians/second
+- feature with 'LinearJerk' in its name is in 'g/second'
+- feature with 'AngularJerk' in its name is in radians/(second^2)
