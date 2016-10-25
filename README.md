@@ -5,9 +5,10 @@ The purpose of this repository is to describe the process of cleaning the Human 
 
 ##Content
 The content of this repository is:
-* 1(one) tidy dataset 
-* 1(one) code book
-* 1(one) R script
+* this readme file    : README.md
+* 1(one) tidy dataset : tidy.txt
+* 1(one) code book    : CodeBook.md
+* 1(one) R script     : run_analysis.R
 
 The tidy dataset contains the average of each variable for each activity and each subject.
 
@@ -30,7 +31,7 @@ setwd("UCI HAR Dataset/")
 ```
 Afterward, you can execute run_analysis.R in the working directory.
 ```r
-source(run_analysis.R) #make sure you put the script file in the UCI HAR Dataset directory
+source("run_analysis.R") #make sure you put the script file in the UCI HAR Dataset directory
 ```
 
 ##Analysis Explanation
